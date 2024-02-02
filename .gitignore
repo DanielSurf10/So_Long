@@ -1,0 +1,4 @@
+*.o
+*.a
+lib/MLX42/build
+so_long
