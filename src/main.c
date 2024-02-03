@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:53:24 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/02/02 17:45:19 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/02/02 22:28:03 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,17 @@ static void	print_error(int return_code)
 		ft_putendl_fd("Empty file. Please provide a non-empty '.ber' file.", 1);
 	else if (return_code == INVALID_CHAR_ERROR)
 		ft_putendl_fd("Invalid char set. Expected '01CEP' character set.", 1);
-	else if (return_code == INVALID_TILE_COUNT_ERROR)
-		ft_putendl_fd("Bugou", 1);
+	else if (return_code == INVALID_EXIT_ERROR)
+		ft_putendl_fd("No exit or more than one exit found on the map.", 1);
+	else if (return_code == INSUFFICIENT_COLLECTIBLES_ERROR)
+		ft_putendl_fd("Less than one collectible found on the map.", 1);
+	else if (return_code == INVALID_START_POINT_ERROR)
+		ft_putendl_fd("No start point or more than one start point \
+found on the map.", 1);
+	else if (return_code == MAP_NOT_RECTANGULAR_ERROR)
+		ft_putendl_fd("The map is not rectangular.", 1);
+	else if (return_code == MAP_NOT_ENCLOSED_ERROR)
+		ft_putendl_fd("The map is not fully enclosed by walls.", 1);
 
 	exit(EXIT_FAILURE);
 }

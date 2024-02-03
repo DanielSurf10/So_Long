@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:56:59 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/02/02 16:18:06 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/02/02 22:18:13 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ enum e_errors
 	FILE_NOT_FOUND_ERROR,
 	FILE_EMPTY_ERROR,
 	INVALID_CHAR_ERROR,
-	INVALID_TILE_COUNT_ERROR,
+	INVALID_EXIT_ERROR,
+	INSUFFICIENT_COLLECTIBLES_ERROR,
+	INVALID_START_POINT_ERROR,
 	MAP_NOT_RECTANGULAR_ERROR,
 	MAP_NOT_ENCLOSED_ERROR,
 };

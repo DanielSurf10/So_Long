@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:44:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/02/02 17:20:58 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/02/02 22:22:34 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ static	int	validate_tile_count(char *file_string, int *return_code)
 	int	collectible_count;
 	int	starting_count;
 
-	i = 0;
+	i = -1;
 	exit_count = 0;
 	collectible_count = 0;
 	starting_count = 0;
-	while (file_string[i])
+	while (file_string[++i])
 	{
 		if (file_string[i] == 'E')
 			exit_count++;
@@ -50,10 +50,13 @@ static	int	validate_tile_count(char *file_string, int *return_code)
 			collectible_count++;
 		else if (file_string[i] == 'P')
 			starting_count++;
-		i++;
 	}
-	if (exit_count != 1 || collectible_count < 1 || starting_count != 1)
-		*return_code = INVALID_TILE_COUNT_ERROR;
+	if (exit_count != 1)
+		*return_code = INVALID_EXIT_ERROR;
+	else if (collectible_count < 1)
+		*return_code = INSUFFICIENT_COLLECTIBLES_ERROR;
+	else if (starting_count != 1)
+		*return_code = INVALID_START_POINT_ERROR;
 	return (*return_code);
 }
 
