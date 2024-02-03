@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:44:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/02/02 22:22:34 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/02/02 23:55:27 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ static int	validate_walls_enclosure(char *file_string, int *return_code)
 		i++;
 	if (i != map_width)
 		*return_code = MAP_NOT_ENCLOSED_ERROR;
-	while (split[count_split] && split[count_split][0] == '1' && split[count_split][map_width - 1] == '1')
+	while (split[count_split] && split[count_split][0] == '1'
+			&& split[count_split][map_width - 1] == '1')
 		count_split++;
 	if (count_split != map_heigth)
 		*return_code = MAP_NOT_ENCLOSED_ERROR;
@@ -109,32 +110,24 @@ static int	validate_walls_enclosure(char *file_string, int *return_code)
 	return (*return_code);
 }
 
-static int flood_fill(char *file_string, int *return_code)
-{
-	return (SUCCESS);
-}
-
 // Verificações:
 //	1°: o mapa deve conter apenas os caracteres: "01CEP" - INVALID_CHAR_ERROR - Talvez aqui mude para fazer o bônus
-//	2°: o mapa deve conter uma saída "E", pelo menos um coletável "C" e um ponto de início "P" - INVALID_TILE_COUNT_ERROR
-//	3°: o mapa deve ser retangular - MAP_NOT_RECTANGULAR_ERROR
-//	4°: o mapa deve ser fechado por paredes - MAP_NOT_ENCLOSED_ERROR
+//	2°: o mapa deve conter uma saída "E" - INVALID_EXIT_ERROR
+//	3°: o mapa deve conter pelo menos um coletável "C" - INSUFFICIENT_COLLECTIBLES_ERROR
+//	4°: o mapa deve conter pelo menos um ponto de início "P" - INVALID_START_POINT_ERROR
+//	5°: o mapa deve ser retangular - MAP_NOT_RECTANGULAR_ERROR
+//	6°: o mapa deve ser fechado por paredes - MAP_NOT_ENCLOSED_ERROR
+//	7°: o mapa deve ter um caminho válido para todos os coletáveis e para a saída - NO_VALID_PATH_ERROR
 int	map_validation(char *file_string)
 {
 	int	return_code;
 
 	return_code = SUCCESS;
-	// if (validate_char_set(file_string, &return_code)
-	// 	|| validate_tile_count(file_string, &return_code)
-	// 	|| validate_rectangle_shape(file_string, &return_code)
-	// 	|| validate_walls_enclosure(file_string, &return_code)
-	// 	|| flood_fill(file_string, &return_code))
-	// 	return (return_code);
-
-	validate_char_set(file_string, &return_code);
-	validate_tile_count(file_string, &return_code);
-	validate_rectangle_shape(file_string, &return_code);
-	validate_walls_enclosure(file_string, &return_code);
-	// flood_fill(file_string, &return_code);
+	if (validate_char_set(file_string, &return_code)
+		|| validate_tile_count(file_string, &return_code)
+		|| validate_rectangle_shape(file_string, &return_code)
+		|| validate_walls_enclosure(file_string, &return_code)
+		|| flood_fill(file_string, &return_code))
+		return (return_code);
 	return (return_code);
 }

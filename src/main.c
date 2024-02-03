@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:53:24 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/02/02 22:28:03 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/02/02 23:51:46 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ found on the map.", 1);
 		ft_putendl_fd("The map is not rectangular.", 1);
 	else if (return_code == MAP_NOT_ENCLOSED_ERROR)
 		ft_putendl_fd("The map is not fully enclosed by walls.", 1);
-
+	else if (return_code == NO_VALID_PATH_ERROR)
+		ft_putendl_fd("There is no path to finish on the map.", 1);
 	exit(EXIT_FAILURE);
 }
 
@@ -56,6 +57,7 @@ int	main(int argv, char *argc[])
 		return (1);
 	}
 
+	printf("Mapa validado!\n");
 
 	return (0);
 }
