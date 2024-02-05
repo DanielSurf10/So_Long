@@ -6,7 +6,7 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/02 12:43:51 by danbarbo          #+#    #+#              #
-#    Updated: 2024/02/02 16:33:01 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/02/04 20:46:48 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,9 @@ libmlx:
 libft:
 	@make -C ${LIBFT} all
 
+test: libmlx libft
+	${CC} ${CFLAGS} ${HEADERS} teste/test_imagens.c ${LIBS}
+
 obj/%.o: src/%.c
 	@mkdir -p ${dir $@}
 	@${CC} ${CFLAGS} ${HEADERS} -o $@ -c $<
@@ -49,4 +52,4 @@ fclean: clean
 
 re: clean all
 
-.PHONY: all, clean, fclean, re, libmlx, libft
+.PHONY: all, clean, fclean, re, libmlx, libft, test
