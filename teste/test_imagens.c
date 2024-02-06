@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 17:15:36 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/02/06 16:40:58 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/02/06 19:19:55 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,7 @@ struct imagens
 	mlx_texture_t	*texture;
 };
 
-void	texture_to_image(mlx_texture_t *texture, mlx_image_t *image, int x, int y)
-{
-	int		i;
-	uint8_t	*pixelx;
-	uint8_t	*pixeli;
-
-	for (i = 0; i < texture->height; i++)
-	{
-		pixelx = &texture->pixels[(i * texture->width) * texture->bytes_per_pixel];
-		pixeli = &image->pixels[((x + i) * image->width) * texture->bytes_per_pixel];
-		memmove(pixeli, pixelx, texture->width * texture->bytes_per_pixel);
-	}
-}
+void	texture_to_image(mlx_texture_t *texture, mlx_image_t *image, int x, int y);
 
 void	function(mlx_key_data_t keydata, void *param)
 {
@@ -49,15 +37,7 @@ void	function(mlx_key_data_t keydata, void *param)
 
 		if (keydata.key == MLX_KEY_B)
 		{
-			// for (int x = 0; x < image->image1->width; x++)
-			// {
-			// 	for (int y = 0; y < image->image1->height; y++)
-			// 	{
-			// 		mlx_put_pixel(image->image2, x, y, image->image1->pixels[y * image->image1->width + x]);
-			// 		printf("%d\n", image->image1->pixels[y * image->image1->width + x]);
-			// 	}
-			// }
-			texture_to_image(image->texture, image->image2, 100, 100);
+			// texture_to_image(image->texture, image->image2, 100, 100);
 		}
 	}
 }
@@ -65,11 +45,17 @@ void	function(mlx_key_data_t keydata, void *param)
 int main()
 {
 	struct imagens imagens;
-	imagens.mlx = mlx_init(1280, 720, "so_long", true);
 
 	imagens.texture = mlx_load_png("images/Blue.png");
+	imagens.mlx = mlx_init(imagens.texture->width * 10, imagens.texture->height * 10, "so_long", true);
 	imagens.image1 = mlx_texture_to_image(imagens.mlx, imagens.texture);
-	imagens.image2 = mlx_new_image(imagens.mlx, imagens.texture->width, imagens.texture->height);
+	imagens.image2 = mlx_new_image(imagens.mlx, imagens.mlx->width, imagens.mlx->height);
+
+	int count_width = imagens.mlx->width / imagens.image2->width;
+	int count_height = imagens.mlx->height / imagens.image2->height;
+	for (int j = 0; j < imagens.image2->width * count_width; j += imagens.image2->width)
+		for (int i = 0; i < imagens.image2->width * count_width; i += imagens.image2->width)
+			texture_to_image(imagens.texture, imagens.image2, i, j);
 
 	// mlx_image_to_window(imagens.mlx, imagens.image1, 0, 0);
 	mlx_image_to_window(imagens.mlx, imagens.image2, 0, 0);
@@ -77,7 +63,6 @@ int main()
 	mlx_key_hook(imagens.mlx, function, &imagens);
 
 	mlx_loop(imagens.mlx);
-
 
 	return (0);
 }
