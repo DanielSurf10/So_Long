@@ -6,12 +6,19 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:44:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/02/02 23:55:27 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/02/06 18:07:05 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+/**
+ * @brief Valida se o mapa contém apenas os caracteres '01CEP'.
+ *
+ * @param file_string A string que representa o arquivo de mapa.
+ * @param return_code Ponteiro para o código de status da operação.
+ * @return int
+ */
 static int	validate_char_set(char *file_string, int *return_code)
 {
 	int	i;
@@ -23,7 +30,7 @@ static int	validate_char_set(char *file_string, int *return_code)
 			&& file_string[i] != 'C' && file_string[i] != 'E'
 			&& file_string[i] != 'P' && file_string[i] != '\n')
 		{
-			*return_code = INVALID_CHAR_ERROR;
+			*return_code = INVALID_CHARSET_ERROR;
 			break ;
 		}
 		i++;
@@ -31,6 +38,13 @@ static int	validate_char_set(char *file_string, int *return_code)
 	return (*return_code);
 }
 
+/**
+ * @brief Valida se o mapa contém apenas um ponto de saída.
+ *
+ * @param file_string A string que representa o arquivo de mapa.
+ * @param return_code Ponteiro para o código de status da operação.
+ * @return int
+ */
 static	int	validate_tile_count(char *file_string, int *return_code)
 {
 	int	i;
@@ -60,6 +74,13 @@ static	int	validate_tile_count(char *file_string, int *return_code)
 	return (*return_code);
 }
 
+/**
+ * @brief Valida se o mapa é retangular.
+ *
+ * @param file_string A string que representa o arquivo de mapa.
+ * @param return_code Ponteiro para o código de status da operação.
+ * @return int
+ */
 static int	validate_rectangle_shape(char *file_string, int *return_code)
 {
 	int		count_split;
@@ -82,6 +103,13 @@ static int	validate_rectangle_shape(char *file_string, int *return_code)
 	return (*return_code);
 }
 
+/**
+ * @brief Valida se o mapa é completamente cercado por paredes.
+ *
+ * @param file_string A string que representa o arquivo de mapa.
+ * @param return_code Ponteiro para o código de status da operação.
+ * @return int
+ */
 static int	validate_walls_enclosure(char *file_string, int *return_code)
 {
 	int		i;
@@ -111,10 +139,10 @@ static int	validate_walls_enclosure(char *file_string, int *return_code)
 }
 
 // Verificações:
-//	1°: o mapa deve conter apenas os caracteres: "01CEP" - INVALID_CHAR_ERROR - Talvez aqui mude para fazer o bônus
+//	1°: o mapa deve conter apenas os caracteres: "01CEP" - INVALID_CHARSET_ERROR - Talvez aqui mude para fazer o bônus
 //	2°: o mapa deve conter uma saída "E" - INVALID_EXIT_ERROR
 //	3°: o mapa deve conter pelo menos um coletável "C" - INSUFFICIENT_COLLECTIBLES_ERROR
-//	4°: o mapa deve conter pelo menos um ponto de início "P" - INVALID_START_POINT_ERROR
+//	4°: o mapa deve conter só um ponto de início "P" - INVALID_START_POINT_ERROR
 //	5°: o mapa deve ser retangular - MAP_NOT_RECTANGULAR_ERROR
 //	6°: o mapa deve ser fechado por paredes - MAP_NOT_ENCLOSED_ERROR
 //	7°: o mapa deve ter um caminho válido para todos os coletáveis e para a saída - NO_VALID_PATH_ERROR

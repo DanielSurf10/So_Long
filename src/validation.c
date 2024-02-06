@@ -6,12 +6,20 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 13:31:53 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/02/02 16:24:08 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/02/06 18:10:03 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+/**
+ * @brief Verifica se a extensão do arquivo é ".ber".
+ *
+ * @param file_path: O caminho para o arquivo.
+ * @param return_code: O código de status da operação.
+ *
+ * @return: Retorna o código de status da operação.
+ */
 static int	check_file_extension(char *file_path, int *return_code)
 {
 	int	length;
@@ -22,6 +30,13 @@ static int	check_file_extension(char *file_path, int *return_code)
 	return (*return_code);
 }
 
+/**
+ * @brief Lê todo o conteúdo de um arquivo.
+ *
+ * @param fd: O descritor do arquivo.
+ *
+ * @return: Retorna uma string com o conteúdo do arquivo.
+ */
 static char	*ft_read_all(int fd)
 {
 	int		chars_readed;
@@ -44,11 +59,6 @@ static char	*ft_read_all(int fd)
 	return (file_string);
 }
 
-// Verificações:
-//	1°: o arquivo deve ter uma extensão ".ber" - FILE_EXTENSION_ERROR
-//	2°: o arquivo deve existe - FILE_NOT_FOUND_ERROR
-//	3°: o arquivo não deve está vazio e tem permissões de leitura - FILE_EMPTY_ERROR
-//	4°: verificações do mapa - map_validation.c
 int	validate(char *path_to_map)
 {
 	int		fd;

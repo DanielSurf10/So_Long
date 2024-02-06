@@ -6,12 +6,17 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:53:24 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/02/02 23:51:46 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:49:16 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+/**
+ * @brief Imprime uma mensagem de erro e termina o programa com EXIT_FAILURE.
+ *
+ * @param return_code: O código de erro que será impresso.
+ */
 static void	print_error(int return_code)
 {
 	ft_putendl_fd("Error", 1);
@@ -23,7 +28,7 @@ static void	print_error(int return_code)
 		ft_putendl_fd("File not found. Please provide a valid '.ber' file.", 1);
 	else if (return_code == FILE_EMPTY_ERROR)
 		ft_putendl_fd("Empty file. Please provide a non-empty '.ber' file.", 1);
-	else if (return_code == INVALID_CHAR_ERROR)
+	else if (return_code == INVALID_CHARSET_ERROR)
 		ft_putendl_fd("Invalid char set. Expected '01CEP' character set.", 1);
 	else if (return_code == INVALID_EXIT_ERROR)
 		ft_putendl_fd("No exit or more than one exit found on the map.", 1);

@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 17:15:36 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/02/04 21:35:44 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:40:58 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ struct imagens
 void	texture_to_image(mlx_texture_t *texture, mlx_image_t *image, int x, int y)
 {
 	int		i;
-	char	*pixelx;
-	char	*pixeli;
+	uint8_t	*pixelx;
+	uint8_t	*pixeli;
 
 	for (i = 0; i < texture->height; i++)
 	{
 		pixelx = &texture->pixels[(i * texture->width) * texture->bytes_per_pixel];
-		pixeli = &image->pixels[(i * image->width) * texture->bytes_per_pixel];
+		pixeli = &image->pixels[((x + i) * image->width) * texture->bytes_per_pixel];
 		memmove(pixeli, pixelx, texture->width * texture->bytes_per_pixel);
 	}
 }
@@ -57,7 +57,7 @@ void	function(mlx_key_data_t keydata, void *param)
 			// 		printf("%d\n", image->image1->pixels[y * image->image1->width + x]);
 			// 	}
 			// }
-			texture_to_image(image->texture, image->image2, 0, 0);
+			texture_to_image(image->texture, image->image2, 100, 100);
 		}
 	}
 }
@@ -71,8 +71,8 @@ int main()
 	imagens.image1 = mlx_texture_to_image(imagens.mlx, imagens.texture);
 	imagens.image2 = mlx_new_image(imagens.mlx, imagens.texture->width, imagens.texture->height);
 
-	mlx_image_to_window(imagens.mlx, imagens.image1, 0, 0);
-	mlx_image_to_window(imagens.mlx, imagens.image2, 100, 100);
+	// mlx_image_to_window(imagens.mlx, imagens.image1, 0, 0);
+	mlx_image_to_window(imagens.mlx, imagens.image2, 0, 0);
 
 	mlx_key_hook(imagens.mlx, function, &imagens);
 
