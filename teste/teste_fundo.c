@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_imagens.c                                     :+:      :+:    :+:   */
+/*   teste_fundo.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 17:15:36 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/02/06 19:19:55 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/02/08 17:00:45 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ int main()
 	imagens.image1 = mlx_texture_to_image(imagens.mlx, imagens.texture);
 	imagens.image2 = mlx_new_image(imagens.mlx, imagens.mlx->width, imagens.mlx->height);
 
-	int count_width = imagens.mlx->width / imagens.image2->width;
-	int count_height = imagens.mlx->height / imagens.image2->height;
-	for (int j = 0; j < imagens.image2->width * count_width; j += imagens.image2->width)
-		for (int i = 0; i < imagens.image2->width * count_width; i += imagens.image2->width)
+	int count_width = imagens.mlx->width / imagens.texture->width;
+	int count_height = imagens.mlx->height / imagens.texture->height;
+	for (int j = 0; j < imagens.texture->width * count_width; j += imagens.texture->width)
+		for (int i = 0; i < imagens.texture->width * count_width; i += imagens.texture->width)
 			texture_to_image(imagens.texture, imagens.image2, i, j);
 
 	// mlx_image_to_window(imagens.mlx, imagens.image1, 0, 0);
