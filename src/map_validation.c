@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:44:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/02/06 18:07:05 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/02/09 13:49:00 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,12 @@ static	int	validate_tile_count(char *file_string, int *return_code)
  * @param return_code Ponteiro para o código de status da operação.
  * @return int
  */
-static int	validate_rectangle_shape(char *file_string, int *return_code)
+static int	validate_rectangle_shape(char **split, int *return_code)
 {
 	int		count_split;
 	int		first_line_width;
-	char	**split;
 
 	count_split = 0;
-	split = ft_split(file_string, '\n');
 	first_line_width = ft_strlen(split[0]);
 	while (split[count_split])
 	{
@@ -99,7 +97,6 @@ static int	validate_rectangle_shape(char *file_string, int *return_code)
 		}
 		count_split++;
 	}
-	ft_free_split(split);
 	return (*return_code);
 }
 
@@ -110,18 +107,16 @@ static int	validate_rectangle_shape(char *file_string, int *return_code)
  * @param return_code Ponteiro para o código de status da operação.
  * @return int
  */
-static int	validate_walls_enclosure(char *file_string, int *return_code)
+static int	validate_walls_enclosure(char **split, int *return_code)
 {
 	int		i;
 	int		count_split;
 	int		map_width;
 	int		map_heigth;
-	char	**split;
 
 	i = 0;
 	map_heigth = 0;
 	count_split = 0;
-	split = ft_split(file_string, '\n');
 	map_width = ft_strlen(split[0]);
 	while (split[map_heigth])
 		map_heigth++;
@@ -134,7 +129,6 @@ static int	validate_walls_enclosure(char *file_string, int *return_code)
 		count_split++;
 	if (count_split != map_heigth)
 		*return_code = MAP_NOT_ENCLOSED_ERROR;
-	ft_free_split(split);
 	return (*return_code);
 }
 
@@ -148,14 +142,17 @@ static int	validate_walls_enclosure(char *file_string, int *return_code)
 //	7°: o mapa deve ter um caminho válido para todos os coletáveis e para a saída - NO_VALID_PATH_ERROR
 int	map_validation(char *file_string)
 {
-	int	return_code;
+	int		return_code;
+	char	**split;
 
 	return_code = SUCCESS;
+	split = ft_split(file_string, '\n');
 	if (validate_char_set(file_string, &return_code)
 		|| validate_tile_count(file_string, &return_code)
-		|| validate_rectangle_shape(file_string, &return_code)
-		|| validate_walls_enclosure(file_string, &return_code)
+		|| validate_rectangle_shape(split, &return_code)
+		|| validate_walls_enclosure(split, &return_code)
 		|| flood_fill(file_string, &return_code))
-		return (return_code);
+		;
+	ft_free_split(split);
 	return (return_code);
 }

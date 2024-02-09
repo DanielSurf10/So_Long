@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:56:59 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/02/06 18:08:43 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/02/09 14:19:38 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,21 @@ enum e_errors
 
 // Structs
 
+// Estrutura do player
+typedef struct s_player
+{
+	int	x;
+	int	y;
+}	t_player;
+
+// Estrutura principal
 typedef struct s_so_long
 {
 	mlx_t	*mlx;
 }	t_so_long;
 
 // Functions
+// Principais
 
 /**
  * @brief Valida um arquivo de mapa do jogo.
@@ -126,5 +135,34 @@ int	map_validation(char *file_string);
  * 2. Verifica se todos os coletáveis ('C') e a saída ('E') foram preenchidas.
  */
 int flood_fill(char *file_string, int *return_code);
+
+// Utils
+
+/**
+ * @brief Obtém a largura do mapa.
+ *
+ * @param file_string: A string que representa o arquivo de mapa.
+ *
+ * @return: Retorna a largura do mapa.
+ */
+int			get_map_width(char *file_string);
+
+/**
+ * @brief Obtém a altura do mapa.
+ *
+ * @param file_string: A string que representa o arquivo de mapa.
+ *
+ * @return: Retorna a altura do mapa.
+ */
+int			get_map_heigth(char *file_string);
+
+/**
+ * @brief Obtém a posição do jogador.
+ *
+ * @param file_string: A string que representa o arquivo de mapa.
+ *
+ * @return: Retorna a posição (x, y) do jogador.
+ */
+t_player	get_player_pos(char *file_string);
 
 #endif

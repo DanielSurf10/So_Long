@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 22:36:36 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/02/06 18:07:20 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/02/09 14:01:38 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,28 +54,14 @@ static void	check_flood(char *map, int *return_code)
 
 int	flood_fill(char *file_string, int *return_code)
 {
-	int		x;
-	int		y;
-	int		width;
-	char	*map;
-	char	**split;
+	int			width;
+	char		*map;
+	t_player	player_pos;
 
-	x = 0;
-	y = 0;
 	map = ft_strdup(file_string);
-	split = ft_split(file_string, '\n');
-	width = ft_strlen(split[0]) + 1;
-	while (split[y])
-	{
-		x = 0;
-		while (split[y][x] && split[y][x] != 'P')
-			x++;
-		if (split[y][x] == 'P')
-			break ;
-		y++;
-	}
-	ft_free_split(split);
-	fill(&map, x, y, width);
+	width = get_map_width(file_string) + 1;
+	player_pos = get_player_pos(file_string);
+	fill(&map, player_pos.x, player_pos.y, width);
 	check_flood(map, return_code);
 	free(map);
 	return (*return_code);
