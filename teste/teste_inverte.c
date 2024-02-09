@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 17:01:51 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/02/08 19:54:56 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/02/08 22:28:01 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int main()
 
 	imagens.mlx = mlx_init(300, 300, "", false);
 
-	imagens.texture = mlx_load_png("images/cat.png");
+	imagens.texture = mlx_load_png("images/Blue.png");
 	imagens.image1 = mlx_texture_to_image(imagens.mlx, imagens.texture);
 	a = mlx_texture_to_image(imagens.mlx, imagens.texture);
 

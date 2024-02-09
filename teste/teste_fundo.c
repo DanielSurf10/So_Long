@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 17:15:36 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/02/08 17:00:45 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/02/08 22:33:05 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,32 @@ struct imagens
 };
 
 void	texture_to_image(mlx_texture_t *texture, mlx_image_t *image, int x, int y);
+
+void	*get_pixel(mlx_texture_t *texture, int x, int y)
+{
+	return (&texture->pixels[(y * texture->width + x) * 4]);
+}
+
+void	invert_image(mlx_texture_t *texture)
+{
+	int		x;
+	int		y;
+	char	tmp[4];
+
+	y = 0;
+	while (y < texture->height)
+	{
+		x = 0;
+		while (x < texture->width / 2)
+		{
+			memcpy(tmp, get_pixel(texture, x, y), 4);
+			memcpy(get_pixel(texture, x, y), get_pixel(texture, texture->width - x - 1, y), 4);
+			memcpy(get_pixel(texture, texture->width - x - 1, y), tmp, 4);
+			x++;
+		}
+		y++;
+	}
+}
 
 void	function(mlx_key_data_t keydata, void *param)
 {
@@ -54,8 +80,14 @@ int main()
 	int count_width = imagens.mlx->width / imagens.texture->width;
 	int count_height = imagens.mlx->height / imagens.texture->height;
 	for (int j = 0; j < imagens.texture->width * count_width; j += imagens.texture->width)
+	{
 		for (int i = 0; i < imagens.texture->width * count_width; i += imagens.texture->width)
+		{
 			texture_to_image(imagens.texture, imagens.image2, i, j);
+			invert_image(imagens.texture);
+		}
+		invert_image(imagens.texture);
+	}
 
 	// mlx_image_to_window(imagens.mlx, imagens.image1, 0, 0);
 	mlx_image_to_window(imagens.mlx, imagens.image2, 0, 0);
