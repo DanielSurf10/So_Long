@@ -6,7 +6,7 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/02 12:43:51 by danbarbo          #+#    #+#              #
-#    Updated: 2024/02/08 22:28:50 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/02/09 17:40:53 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ libft:
 	@make -C ${LIBFT} all
 
 test: libmlx libft
-	${CC} ${CFLAGS} ${HEADERS} teste/teste_fundo.c teste/utils.c ${LIBS}
+	${CC} ${CFLAGS} ${HEADERS} teste/teste_sprites.c teste/utils.c ${LIBS}
 
 obj/%.o: src/%.c
 	@mkdir -p ${dir $@}
