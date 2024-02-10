@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 17:40:22 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/02/09 21:13:32 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/02/09 21:45:53 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ typedef struct s_animation
 	void			*mlx;
 	mlx_texture_t	*texture;
 	mlx_image_t		*image;
-	int				sprite_number;
+	int				sprite_count;
+	int				frame_until_change;
+	int				frames_to_wait;
 }	t_animation;
 
 mlx_texture_t	*get_sprite(mlx_texture_t *texture, int x, int y, int width, int height);
@@ -31,17 +33,17 @@ void	loop(void *param)
 
 	animation = param;
 
-	if (counter == 5)
+	if (counter == animation->frame_until_change)
 	{
 		sprite_counter++;
-		if (sprite_counter <= animation->sprite_number + 1)
+		if (sprite_counter <= animation->sprite_count + 1)
 		{
 			printf("%d\n", sprite_counter);
-			put_sprite(animation->texture, animation->image, (sprite_counter % (animation->sprite_number + 1)) * animation->image->width, 0, animation->image->width, animation->image->height);
+			put_sprite(animation->texture, animation->image, (sprite_counter % (animation->sprite_count + 1)) * animation->image->width, 0, animation->image->width, animation->image->height);
 		}
 		else
 		{
-			if (sprite_counter >= 50)
+			if (sprite_counter >= animation->frames_to_wait)
 				sprite_counter = 0;
 			else
 				sprite_counter++;
@@ -67,11 +69,11 @@ int main()
 {
 	t_animation animation;
 
-	void *mlx = mlx_init(32, 32, "", true);
+	void *mlx = mlx_init(64, 64, "", true);
 	mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	animation.mlx = mlx;
 
-	mlx_texture_t *texture = mlx_load_png("images/Caracter.png");
+	mlx_texture_t *texture = mlx_load_png("images/End (Pressed) (64x64).png");
 	animation.texture = texture;
 
 // 	mlx_texture_t *sprite1 = get_sprite(texture, 0, 0, 32, 32);
@@ -86,15 +88,19 @@ int main()
 	// mlx_image_to_window(mlx, image1, 0, 0);
 	// mlx_image_to_window(mlx, image2, 132, 0);
 
-	void *image = mlx_new_image(mlx, 32, 32);
+	void *image = mlx_new_image(mlx, 64, 64);
 	animation.image = image;
-	animation.sprite_number = 10;
+	animation.sprite_count = 15;
+	animation.frame_until_change = 3;
+	animation.frames_to_wait = 50;
 
 	// mlx_resize_image(image, 100, 100);
 
-	for (int i = 0; i < 10; i++)
-		for (int j = 0; j < 10; j++)
-			mlx_image_to_window(mlx, image, 32 * i, 32 * j);
+	// for (int i = 0; i < 10; i++)
+	// 	for (int j = 0; j < 10; j++)
+	// 		mlx_image_to_window(mlx, image, 32 * i, 32 * j);
+
+	mlx_image_to_window(mlx, image, 0, 0);
 
 	mlx_loop_hook(mlx, loop, &animation);
 	mlx_key_hook(mlx, function, mlx);
