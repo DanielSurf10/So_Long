@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load1_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krocha-h <krocha-h@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:35:09 by krocha-h          #+#    #+#             */
-/*   Updated: 2024/02/15 16:53:54 by krocha-h         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:36:55 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ mlx_image_t	*load_imgs(const char *path, t_game *game)
 	mlx_image_t		*img;
 
 	texture = mlx_load_png(path);
-	if (!texture)
-	{
-		ft_putstr_fd(MSG_LOAD, 2);
-		exit(EXIT_FAILURE);
-	}
+	// if (!texture)				// Vou desconsiderar as falhas da mlx
+	// {
+	// 	ft_putstr_fd(MSG_LOAD, 2);
+	// 	exit(EXIT_FAILURE);
+	// }
 	img = mlx_texture_to_image(game->mlx, texture);
 	mlx_delete_texture(texture);
 	return (img);

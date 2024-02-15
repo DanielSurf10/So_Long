@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_format_bonus.c                                 :+:      :+:    :+:   */
+/*   format_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krocha-h <krocha-h@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:32:50 by krocha-h          #+#    #+#             */
-/*   Updated: 2024/02/06 15:29:26 by krocha-h         ###   ########.fr       */
+/*   Updated: 2024/02/15 20:14:09 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,25 @@ t_map	*store_map_info(t_list *map_list)
 	t_map	*map_info;
 	int32_t	i;
 
-	if (map_list == NULL)
-		return (NULL);
-	map_info = (t_map *)malloc(sizeof(t_map));
-	if (!map_info)
-		return (NULL);
+	// if (map_list == NULL)		// Se isso aconteceu, temos um problema maior
+	// 	return (NULL);					// Então vou só desconsiderar
+
+	map_info = (t_map *)malloc(sizeof(t_map));			// Isso aqui poderia estar na estrutura principal
+														// Aí não iria precisar allocar memória aqui
+
+	// if (!map_info)									// Vou desconsiderar as falhas do malloc
+	// 	return (NULL);
+
 	map_info->height = ft_lstsize(map_list);
-	map_info->matrix = malloc(map_info->height * sizeof(char *));
-	if (!map_info->matrix)
-	{
-		free(map_info);
-		return (NULL);
-	}
+	map_info->matrix = malloc(map_info->height * sizeof(char **));		// Aqui é uma matriz de char **
+																		// Não apenas char *
+
+	// if (!map_info->matrix)							// Vou desconsiderar as falhas do malloc
+	// {
+	// 	free(map_info);
+	// 	return (NULL);
+	// }
+
 	i = 0;
 	while (map_list != NULL)
 	{
@@ -69,11 +76,13 @@ t_list	*read_map(int fd)
 			break ;
 		line_cleaner(line);
 		current = ft_lstnew(line);
-		if (!current)
-		{
-			ft_lstclear(&map_list, free);
-			return (NULL);
-		}
+
+		// if (!current)					// Vou desconsiderar as falhas do malloc
+		// {
+		// 	ft_lstclear(&map_list, free);
+		// 	return (NULL);
+		// }
+
 		ft_lstadd_back(&map_list, current);
 	}
 	return (map_list);

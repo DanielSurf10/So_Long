@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   load_imgs_2_bonus.c                                :+:      :+:    :+:   */
+/*   load2_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krocha-h <krocha-h@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:40:39 by krocha-h          #+#    #+#             */
-/*   Updated: 2024/02/08 18:22:32 by krocha-h         ###   ########.fr       */
+/*   Updated: 2024/02/15 19:43:38 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,45 @@
 
 void	load_game_end(t_game *game)
 {
-	mlx_texture_t	*texture;
+	// mlx_texture_t	*texture;											// Essa variável já não é mais necessária
 	int32_t			width;
 	int32_t			height;
 	float			ratio;
 
-	texture = mlx_load_png("images/game_over.png");
-	game->sprites.game_over = mlx_texture_to_image(game->mlx, texture);
+	// texture = mlx_load_png("images/game_over.png");						// Aqui está dando leak por causa da textura
+	// game->sprites.game_over = mlx_texture_to_image(game->mlx, texture);	// Pq a textura tem que deletar depois que usa
+																			// Vou trocar por load_imgs()
+																			// E pronto leak resolvido
+	game->sprites.game_over = load_imgs("images/game_over.png", game);		// Fica assim
 	width = game->sprites.game_over->width;
 	height = game->sprites.game_over->height;
 	ratio = game->mlx->height / (float)height;
 	mlx_resize_image(game->sprites.game_over, width * ratio, height * ratio);
-	texture = mlx_load_png("images/game_win.png");
-	game->sprites.game_win = mlx_texture_to_image(game->mlx, texture);
+
+
+	// Agora só fezer isso para todos
+
+	// texture = mlx_load_png("images/game_win.png");
+	// game->sprites.game_win = mlx_texture_to_image(game->mlx, texture);
+
+	game->sprites.game_win = load_imgs("images/game_win.png", game);
 	width = game->sprites.game_win->width;
 	height = game->sprites.game_win->height;
 	ratio = game->mlx->height / (float)height;
 	mlx_resize_image(game->sprites.game_win, width * ratio, height * ratio);
-	texture = mlx_load_png("images/game_end_bg.png");
-	game->sprites.end_bg = mlx_texture_to_image(game->mlx, texture);
+
+
+	// texture = mlx_load_png("images/game_end_bg.png");
+	// game->sprites.end_bg = mlx_texture_to_image(game->mlx, texture);
+
+	game->sprites.end_bg = load_imgs("images/game_end_bg.png", game);
 	mlx_resize_image(game->sprites.end_bg, game->mlx->width, game->mlx->height);
-	mlx_delete_texture(texture);
+
+
+	// mlx_delete_texture(texture);											// Essa linha será apagada
+																			// porque não precisa
+																			// apagar a textura
+																			// a função load_imgs() já fez isso
 }
 
 void	load_hearts(t_game *game)

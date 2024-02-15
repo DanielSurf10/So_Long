@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_validate_1_bonus.c                             :+:      :+:    :+:   */
+/*   validation1_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krocha-h <krocha-h@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:33:01 by krocha-h          #+#    #+#             */
-/*   Updated: 2024/02/08 17:11:21 by krocha-h         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:33:15 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * @brief Checks if there is any unexpected character
  *
  * @details Must have only `P`, `E`, `C`, `0`, `1` or `X`
- * 
+ *
  * @param game pointer to the t_game structure containing game data
  */
 static void	validate_char(t_game *game)

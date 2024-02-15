@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   motion2_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krocha-h <krocha-h@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:21:03 by krocha-h          #+#    #+#             */
-/*   Updated: 2024/02/15 16:21:08 by krocha-h         ###   ########.fr       */
+/*   Updated: 2024/02/15 19:32:13 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,17 @@ void	steps_to_window(t_game *game)
 
 	mlx_delete_image(game->mlx, game->print_steps);
 	steps = ft_itoa(game->move_count);
-	print = ft_calloc(sizeof(char *), 1);
-	if (!print)
-	{
-		ft_putstr_fd(MSG_MALLOC, 2);
-		exit(EXIT_FAILURE);
-	}
+	// print = ft_calloc(sizeof(char *), 1);		// Aqui não precisa alocar nada
+													// Só atribuir a variável pra NULL
+													// E pronto leak resolvido
+	print = NULL;									// Fica assim
+
+	// if (!print)						// Vou desconsiderar falhas do malloc
+	// {
+	// 	ft_putstr_fd(MSG_MALLOC, 2);
+	// 	exit(EXIT_FAILURE);
+	// }
+
 	if (game->move_count == 1)
 		game->print_steps = mlx_put_string(game->mlx, "1 step", 60, 30);
 	else
